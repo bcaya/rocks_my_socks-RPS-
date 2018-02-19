@@ -1,0 +1,8 @@
+.choice {
+  height: 200px;
+  width: 200px;
+  float: left;
+  margin-left: 50px;
+  
+  cursor: pointer;
+}

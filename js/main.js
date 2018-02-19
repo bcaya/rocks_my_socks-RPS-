@@ -1,86 +1,60 @@
-function startGame(e) {
-  var choice = e.target.id
-  console.log(choice)
-  compChoice = Math.random()
-  if (compChoice <0.34){
-    compChoice = "rock";
+//returns users total score
+// stores what the user chose 
+var user;
+var computer; 
+var opts = {
+  0: 'rock',
+  1: 'paper', 
+  2: 'scissors'
   }
-  else if(compChoice <=0.67){
-    compChoice = "paper";
+var userLabel = document.getElementById('user');
+var computer_label = document.getElementById('computer');
+var winnerLabel = document.getElementById('winner');
+var result;
+
+var opt_keys = Object.keys(opts);
+var opt_values = Object.values(opts);
+var opt_num = opt_keys.length
+
+
+function computerChoice() { // this will store the computers choice 
+      var index = Math.floor(Math.random() * opt_keys.length); // gets random from 0-2 and rounds down
+       return opt_values[index]; // save the text from options hash 
   }
-  else{
-    compChoice = "scissors"
-    
+
+function compare() {
+   userIndex = opt_values.indexOf(user);
+   computerIndex = opt_values.indexOf(computer);
+  if (userIndex === computerIndex) {
+    result = 'Tie'
   }
-  console.log(compChoice)
-  checkWin(choice, compChoice)
+    else if (userIndex === opt_values.length - 1 && computerIndex === 0 ) {
+     result = 'Lose';
+  } else if (computerIndex === opt_values.length - 1 && userIndex === 0 ){
+     result = 'Win'
+  } else if (userIndex > computerIndex) {
+   result = 'Win'
+  } else {
+   result = 'Lose';
+  }
 }
 
-
-function checkWin(choice, compChoice){
- if (choice === compChoice) {
-   return ("its a draw!")
-   
-   
-   }
-  if (choice === "rock"){
-    if(compChoice === "scissors"){
-      
-      console.log("rock wins")
-      
-    }
-  else{
-    
-    console.log("paper wins!")
-     }
-    }
-    if(choice ==="paper"){
-      if(compChoice === "rock"){
-        console.log("paper wins!")
-       
-        
-      }
-    else{
-      console.log("scissors win!")
-      
-      
-    }
-    }
-    if(choice === "scissors"){
-      if (compChoice === "paper"){
-        console.log("scissors win!")
-        
-      }
-    else{
-      console.log("rock wins!")
-      
-    }
-    }
-  }
-
- 
-function results(checkWin){
-  if(checkWin === "its a draw!"){
-    function drawsCounter(){
-      return drawsCounter.count++
-    }
-    
-    console.log(`chicken score ${drawsCounter}`)
-    return drawsCounter
-  }
-
-  else if(checkWin === "user 1") {
-    ++user_score 
-    console.log(`cow score ${user_score}`)
-  }
-
+function printResults(){
+  userLabel.innerHTML = 'User: ' + user;
+  computer_label.innerHTML ='Computer: ' + computer;
+  winnerLabel.innerHTML = 'Results: ' + result;
+}
+function startGame(e){
+  user = e.target.id;
+  computer = computerChoice();
+  compare();
+  printResults(); 
 }
 
 var choices = document.getElementsByClassName('choice');
-for (var i in choices) {
+    for (var i in choices) {
   try {
-    choices[i].addEventListener('click', startGame)
-
+    choices[i].addEventListener('click', startGame);
   } catch(err) {
     //First load
   }
